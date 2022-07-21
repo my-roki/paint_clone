@@ -3,26 +3,34 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-// wall
-ctx.fillRect(200, 200, 10, 200);
-ctx.fillRect(400, 200, 10, 200);
-ctx.fillRect(200, 400, 210, 10);
-ctx.fillRect(200, 200, 210, 10);
+const colors = [
+  "#cd84f1",
+  "#ffcccc",
+  "#ff4d4d",
+  "#ffaf40",
+  "#fffa65",
+  "#32ff7e",
+  "#7efff5",
+  "#18dcff",
+  "#7d5fff",
+  "#4b4b4b",
+];
+let pointX = 0;
+let pointY = 0;
 
-// door
-ctx.beginPath();
-ctx.fillRect(300, 300, 50, 100);
-ctx.arc(340, 350, 6, 0, 2 * Math.PI);
-ctx.fillStyle = "white";
-ctx.fill();
+const handleMove = (event) => {
+  ctx.beginPath();
+  ctx.moveTo(pointX, pointY);
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  ctx.strokeStyle = color;
+  ctx.lineTo(event.offsetX, event.offsetY);
+  ctx.stroke();
+};
 
-// roof
-ctx.beginPath();
-ctx.moveTo(200, 200);
-ctx.lineTo(300, 100);
-ctx.lineTo(410, 200);
-ctx.fillStyle = "black";
-ctx.fill();
+const handleClick = (event) => {
+  pointX = event.offsetX;
+  pointY = event.offsetY;
+};
 
-// Chimney
-ctx.fillRect(340, 100, 50, 100);
+canvas.addEventListener("mousemove", handleMove);
+canvas.addEventListener("click", handleClick);
